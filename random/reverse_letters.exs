@@ -8,13 +8,9 @@ defmodule Reverser do
 
   def reverse_letters(string) do
     non_alpha = Regex.scan(~r/\W+/, string, return: :index) |> List.flatten()
-    alpha = Regex.scan(~r/\w/, string)
+    sorted_alpha = Regex.scan(~r/\w/, string) |> List.flatten() |> Enum.reverse()
 
-    sorted = alpha
-      |> List.flatten()
-      |> Enum.reverse()
-
-    Enum.reduce(non_alpha, sorted, fn {pos, len}, acc ->
+    Enum.reduce(non_alpha, sorted_alpha, fn {pos, len}, acc ->
       List.insert_at(acc, pos, String.slice(string, pos, len))
     end)
     |> Enum.join()
